@@ -96,7 +96,7 @@ def get_all_box_matches(prediction_boxes, gt_boxes, iou_threshold):
     matched_prediction_boxes = []
     matched_gt_boxes = []
 
-    while iou.shape != (0,0) and iou.max() > iou_threshold:
+    while iou.size > 0 and iou.max() >= iou_threshold:
         i, j = np.where(iou == iou.max())
         matched_prediction_boxes.append(prediction_boxes[i])
         matched_gt_boxes.append(gt_boxes[j])
@@ -105,8 +105,6 @@ def get_all_box_matches(prediction_boxes, gt_boxes, iou_threshold):
         iou = np.delete(iou, i, 0)
         iou = np.delete(iou, j, 1)
 
-
-    
     return np.array(matched_prediction_boxes), np.array(matched_gt_boxes)
 
 
@@ -128,8 +126,12 @@ def calculate_individual_image_result(prediction_boxes, gt_boxes, iou_threshold)
             {"true_pos": int, "false_pos": int, false_neg": int}
     """
 
-    raise NotImplementedError
+    matched_prediction_boxes, matched_gt_boxes = get_all_box_matches(prediction_boxes, gt_boxes, iou_threshold)
+    num_tp = len(matched_prediction_boxes)
+    num_fp = len(prediction_boxes) - len(matched_prediction_boxes)
+    num_fn = len(gt_boxes) - len(matched_gt_boxes)
 
+    return {"true_pos": num_tp, "false_pos": num_fp, "false_neg": num_fn}
 
 def calculate_precision_recall_all_images(
     all_prediction_boxes, all_gt_boxes, iou_threshold):
@@ -150,7 +152,21 @@ def calculate_precision_recall_all_images(
     Returns:
         tuple: (precision, recall). Both float.
     """
-    raise NotImplementedError
+    num_tp = 0
+    num_fp = 0
+    num_fn = 0
+
+    for i in range(len(all_prediction_boxes)):
+        dict = calculate_individual_image_result(all_prediction_boxes[i], all_gt_boxes[i], iou_threshold)
+        num_tp += dict["true_pos"]
+        num_fp += dict["false_pos"]
+        num_fn += dict["false_neg"]
+
+    precision = calculate_precision(num_tp, num_fp, num_fn)
+    recall = calculate_recall(num_tp, num_fp, num_fn)
+    print(num_tp, num_fp,num_fn)
+    return (precision, recall)
+
 
 
 def get_precision_recall_curve(
