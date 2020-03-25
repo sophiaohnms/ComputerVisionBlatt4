@@ -70,7 +70,7 @@ class BasicModel(torch.nn.Module):
                 padding=pc
             ),
         )
-        self.bank2 = nn.sequential(
+        self.bank2 = nn.Sequential(
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=output_channels[0],
@@ -89,7 +89,7 @@ class BasicModel(torch.nn.Module):
             ),
         )
 
-        self.bank3 = nn.sequential(
+        self.bank3 = nn.Sequential(
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=output_channels[1],
@@ -108,7 +108,7 @@ class BasicModel(torch.nn.Module):
             ),
         )
 
-        self.bank4 = nn.sequential(
+        self.bank4 = nn.Sequential(
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=output_channels[2],
@@ -127,7 +127,7 @@ class BasicModel(torch.nn.Module):
             ),
         )
 
-        self.bank5 = nn.sequential(
+        self.bank5 = nn.Sequential(
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=output_channels[3],
@@ -146,7 +146,7 @@ class BasicModel(torch.nn.Module):
             ),
         )
 
-        self.bank6 = nn.sequential(
+        self.bank6 = nn.Sequential(
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=output_channels[4],
