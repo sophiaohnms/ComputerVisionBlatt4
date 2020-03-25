@@ -2,6 +2,7 @@ import torch
 
 
 class BasicModel(torch.nn.Module):
+
     """
     This is a basic backbone for SSD.
     The feature extractor outputs a list of 6 feature maps, with the sizes:
