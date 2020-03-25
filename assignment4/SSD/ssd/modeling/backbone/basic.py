@@ -14,7 +14,7 @@ class BasicModel(torch.nn.Module):
      shape(-1, output_channels[4], 1, 1)]
      where "output_channels" is the same as cfg.BACKBONE.OUT_CHANNELS
     """
-    def __init__(self, cfg, image_channels, num_classes):
+    def __init__(self, cfg):
         """
             Is called when model is initialized.
             Args:
@@ -27,11 +27,10 @@ class BasicModel(torch.nn.Module):
         self.output_channels = output_channels
         image_channels = cfg.MODEL.BACKBONE.INPUT_CHANNELS
         self.output_feature_size = cfg.MODEL.PRIORS.FEATURE_MAPS
-
+        image_channels = 3
 
         fc, pc = 3, 1
         fp, sp = 2, 2
-        self.num_classes = num_classes
 
         # Define the convolutional layers
         self.bank1 = nn.Sequential(
