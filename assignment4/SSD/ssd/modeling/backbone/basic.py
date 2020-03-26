@@ -82,52 +82,6 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
-                out_channels=self.output_channels[0],
-                kernel_size=fc,
-                stride=2,
-                padding=pc
-            ),
-        )
-
-        self.bank1a = nn.Sequential(
-            nn.Conv2d(
-                in_channels=self.output_channels[0],
-                out_channels=32,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.MaxPool2d(kernel_size=fp, stride=sp),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=32,
-                out_channels=64,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.MaxPool2d(kernel_size=fp, stride=sp),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=64,
-                out_channels=64,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=64,
-                out_channels=self.output_channels[0],
-                kernel_size=fc,
-                stride=2,
-                padding=pc
-            ),
-        )
-        self.bank2a = nn.Sequential(
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=self.output_channels[0],
                 out_channels=128,
                 kernel_size=fc,
                 stride=1,
@@ -155,13 +109,22 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
+                out_channels=128,
+                kernel_size=fc,
+                stride=1,
+                padding=pc
+            ),
+            nn.ReLU(),
+            nn.Conv2d(
+                in_channels=128,
                 out_channels=self.output_channels[1],
                 kernel_size=fc,
                 stride=2,
                 padding=pc
             ),
         )
-        self.bank3a = nn.Sequential(
+
+        self.bank3 = nn.Sequential(
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=self.output_channels[1],
@@ -173,16 +136,6 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=256,
-                out_channels=self.output_channels[1],
-                kernel_size=fc,
-                stride=2,
-                padding=pc
-            ),
-        )
-        self.bank3 = nn.Sequential(
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=self.output_channels[1],
                 out_channels=256,
                 kernel_size=fc,
                 stride=1,
@@ -210,34 +163,6 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
-                out_channels=self.output_channels[3],
-                kernel_size=fc,
-                stride=2,
-                padding=pc
-            ),
-        )
-        self.bank4a = nn.Sequential(
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=self.output_channels[2],
-                out_channels=128,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=128,
-                out_channels=self.output_channels[2],
-                kernel_size=fc,
-                stride=2,
-                padding=pc
-            ),
-        )
-        self.bank5a = nn.Sequential(
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=self.output_channels[3],
                 out_channels=128,
                 kernel_size=fc,
                 stride=1,
@@ -265,13 +190,22 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
+                out_channels=128,
+                kernel_size=fc,
+                stride=1,
+                padding=pc
+            ),
+            nn.ReLU(),
+            nn.Conv2d(
+                in_channels=128,
                 out_channels=self.output_channels[4],
                 kernel_size=fc,
                 stride=2,
                 padding=pc
             ),
         )
-        self.bank6a = nn.Sequential(
+
+        self.bank6 = nn.Sequential(
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=self.output_channels[4],
@@ -283,16 +217,6 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
-                out_channels=self.output_channels[4],
-                kernel_size=fc,
-                stride=1,
-                padding=0
-            ),
-        )
-        self.bank6 = nn.Sequential(
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=self.output_channels[4],
                 out_channels=128,
                 kernel_size=fc,
                 stride=1,
@@ -323,16 +247,13 @@ class BasicModel(torch.nn.Module):
         """
 
         out1 = self.bank1(x)
-        out2 = self.bank1a(out1)
-        out3 = self.bank2(out2)
-        out4 = self.bank2a(out3)
-        out5 = self.bank3(out4)
-        out6 = self.bank3a(out5)
-        out7 = self.bank4(out5)
-        out8 = self.bank5(out5)
-        out9 = self.bank6(out5)
+        out2 = self.bank2(out1)
+        out3 = self.bank3(out2)
+        out4 = self.bank4(out3)
+        out5 = self.bank5(out4)
+        out6 = self.bank6(out5)
 
-        out_features = [out1, out2, out3, out4, out5, out6, out7, out8, out9]
+        out_features = [out1, out2, out3, out4, out5, out6]
 
         for idx, feature in enumerate(out_features):
             out_channel = self.output_channels[idx]
