@@ -4,7 +4,7 @@ import tqdm
 from PIL import Image
 from vizer.draw import draw_boxes
 from ssd.config.defaults import cfg
-from ssd.data.datasets import COCODataset, VOCDataset, MNISTDetection, WaymoDataset
+from ssd.data.datasets import  MNISTDetection
 import argparse
 import numpy as np
 from ssd import torch_utils
