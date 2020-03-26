@@ -64,59 +64,16 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=64,
-                out_channels=128,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=128,
                 out_channels=self.output_channels[0],
                 kernel_size=fc,
                 stride=2,
                 padding=pc
             ),
         )
-        self.bank2a = nn.Sequential(
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=self.output_channels[0],
-                out_channels=256,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=256,
-                out_channels=128,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=128,
-                out_channels=self.output_channels[0],
-                kernel_size=fc,
-                stride=2,
-                padding=pc
-            ),
-        )
-
         self.bank2 = nn.Sequential(
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=self.output_channels[0],
-                out_channels=128,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=128,
                 out_channels=128,
                 kernel_size=fc,
                 stride=1,
@@ -144,14 +101,6 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=256,
-                out_channels=256,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=256,
                 out_channels=self.output_channels[2],
                 kernel_size=fc,
                 stride=2,
@@ -171,14 +120,6 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
-                out_channels=256,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=256,
                 out_channels=self.output_channels[3],
                 kernel_size=fc,
                 stride=2,
@@ -198,14 +139,6 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
-                out_channels=128,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=128,
                 out_channels=self.output_channels[4],
                 kernel_size=fc,
                 stride=2,
@@ -217,14 +150,6 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=self.output_channels[4],
-                out_channels=128,
-                kernel_size=fc,
-                stride=1,
-                padding=pc
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=128,
                 out_channels=128,
                 kernel_size=fc,
                 stride=1,
@@ -268,7 +193,7 @@ class BasicModel(torch.nn.Module):
             feature_map_size = self.output_feature_size[idx]
 
             expected_shape = (out_channel, feature_map_size, feature_map_size)
-            #assert feature.shape[1:] == expected_shape, \
-                #f"Expected shape: {expected_shape}, got: {feature.shape[1:]} at output IDX: {idx}"
+            assert feature.shape[1:] == expected_shape, \
+                f"Expected shape: {expected_shape}, got: {feature.shape[1:]} at output IDX: {idx}"
         return tuple(out_features)
 
