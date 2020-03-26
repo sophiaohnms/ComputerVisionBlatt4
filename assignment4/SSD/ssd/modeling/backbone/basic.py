@@ -82,14 +82,14 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=self.output_channels[0],
-                out_channels=128,
+                out_channels=256,
                 kernel_size=fc,
                 stride=1,
                 padding=pc
             ),
             nn.ReLU(),
             nn.Conv2d(
-                in_channels=128,
+                in_channels=256,
                 out_channels=128,
                 kernel_size=fc,
                 stride=1,
