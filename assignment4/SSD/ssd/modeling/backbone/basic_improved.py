@@ -44,6 +44,7 @@ class BasicModel(torch.nn.Module):
                 padding=pc
             ),
             nn.MaxPool2d(kernel_size=fp, stride=sp),
+            nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=32,
@@ -53,6 +54,7 @@ class BasicModel(torch.nn.Module):
                 padding=pc
             ),
             nn.MaxPool2d(kernel_size=fp, stride=sp),
+            nn.BatchNorm2d(64),   #für andere implemntieren
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=64,
